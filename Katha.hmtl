@@ -1,0 +1,66 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Lineare Abschreiung</title>
+<script>
+function fNameFunktion(){
+
+
+var vAusgabe= "";
+var vStartjahr = 1;
+var vZins;
+var vKreditbetrag;
+var vLaufzeit;
+var vAnnuitaet;
+var vTilgung;
+var vZinsen;
+var vRestschuld;
+
+vKreditbetrag=parseFloat(document.getElementById("idKreditbetrag").value);
+vLaufzeit=parseFloat(document.getElementById("idLaufzeit").value);
+vZins= parseFloat(document.getElementById("idZins").value)/100;
+
+
+
+vRestschuld = vKreditbetrag;
+vAnnuitaet = vKreditbetrag * ((Math.pow((1+vZins), vLaufzeit)*vZins) / ((Math.pow((1+vZins), vLaufzeit)-1)));
+
+
+vAusgabe = vAusgabe + "<table border = 1>";
+vAusgabe = vAusgabe + "<tr><th>Jahr</th><th>Schulden in €</th><th>Zinsen in €</th><th> Annunität in € </th><th> Tilgung in € </th><th> Restschuld in €</th></tr>";
+
+
+while(vStartjahr <= vLaufzeit) {
+
+
+vZinsen = vKreditbetrag * vZins;
+vTilgung = vAnnuitaet -vZinsen;
+vRestschuld = vRestschuld - vTilgung;
+
+vAusgabe = vAusgabe + "<tr><td>" + vStartjahr + "</td><td>" + vKreditbetrag.toFixed(2) + "</td><td>" + vZinsen.toFixed(2) + "</td><td>" + vAnnuitaet.toFixed(2) + "</td><td>" + vTilgung.toFixed(2) + "</td><td>" + vRestschuld.toFixed(2) + "</td></tr>";
+
+
+vKreditbetrag = vKreditbetrag - vTilgung;
+	vStartjahr++;
+}
+
+vAusgabe = vAusgabe + "</table>";
+
+document.getElementById("idAusgabe").innerHTML = vAusgabe;
+
+}
+
+</script>
+</head>
+
+<body>
+	<h1>Lineare Abschreibung</h1>
+	Kreditbetrag <input id="idKreditbetrag" type="text" value="400000" maxlength="10" size="10"> €</p>
+	Laufzeit: <input id="idLaufzeit" type="text" value="20" maxlength="10" size="10"> Jahre</p>
+	Zinsfuß <input id="idZins" type="text" value="5" maxlength="10" size="10"> %</p>
+	<button onclick="fNameFunktion();">Tilgungsplan erzeugen</button>
+	
+
+<div id="idAusgabe">
+</div>
+</body></html>
